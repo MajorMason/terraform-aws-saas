@@ -1,18 +1,18 @@
 #The filename is simply the path to our API code block for each Lambda function
 resource "aws_lambda_function" "data_reader" {
   function_name    = "${var.environment}-dr"
-  handler          = "app.handler"
-  runtime          = "python3.12"
+  handler          = var.handler
+  runtime          = var.runtime
   role             = aws_iam_role.lambda_exec.arn
 
   filename         = "${path.module}/lambda/data-reader.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
 
-  timeout          = 10
-  memory_size      = 256
+  timeout          = var.timeout
+  memory_size      = var.memory_size
 
   vpc_config {
-    subnet_ids         = var.private_subnet
+    subnet_ids         = [var.private_subnet]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -28,18 +28,18 @@ resource "aws_lambda_function" "data_reader" {
 
 resource "aws_lambda_function" "data_writer" {
   function_name    = "${var.environment}-dw"
-  handler          = "app.handler"
-  runtime          = "python3.12"
+  handler          = var.handler
+  runtime          = var.runtime
   role             = aws_iam_role.lambda_exec.arn
 
-  filename         = "${path.module}/lambda/data-reader.zip"
+  filename         = "${path.module}/lambda/data-writer.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
 
-  timeout          = 10
-  memory_size      = 256
+  timeout          = var.timeout
+  memory_size      = var.memory_size
 
   vpc_config {
-    subnet_ids         = var.private_subnet
+    subnet_ids         = [var.private_subnet]
     security_group_ids = [aws_security_group.lambda_sg.id]
   }
 
@@ -55,13 +55,13 @@ resource "aws_lambda_function" "data_writer" {
 
 resource "aws_lambda_function" "data_driver" {
   function_name    = "${var.environment}-dd"
-  handler          = "app.handler"
-  runtime          = "python3.12"
+  handler          = var.handler
+  runtime          = var.runtime
   role             = aws_iam_role.lambda_exec.arn
 
-  filename         = "${path.module}/lambda/data-reader.zip"
+  filename         = "${path.module}/lambda/data-driver.zip"
   source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
 
-  timeout          = 10
-  memory_size      = 256
+  timeout          = var.timeout
+  memory_size      = var.memory_size
 }
