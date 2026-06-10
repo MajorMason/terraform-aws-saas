@@ -1,0 +1,14 @@
+How AWS Handles DNS Automatically
+
+When you set private_dns_enabled = true on your aws_vpc_endpoint resource
+(and your VPC has DNS resolution enabled), AWS performs the following actions automatically:
+
+-Creates a Hidden Private Hosted Zone: AWS automatically provisions an AWS-managed Route 53 private hosted zone.
+This is the direct equivalent of the Azure Private DNS Zone.
+
+-Associates it with Your VPC: AWS automatically links this hosted zone to your VPC, equivalent to the Azure DNS Zone VNet Link.
+
+-Overrides Public DNS: It injects a record set that resolves the standard public service DNS name
+(e.g., lambda.us-east-1.amazonaws.com) to the private IP addresses of your interface endpoint ENIs.
+
+So in other words, you ONLY need to ensure that the interface_endpoint's argument of "private_dns_enabled" is set to "true".

@@ -18,6 +18,7 @@ resource "aws_lambda_function" "data_reader" {
 
   environment {
     variables = {
+      LAMBDA_ENDPOINT = aws_vpc_endpoint.lambda_interface.dns_entry[0].dns_name
       DB_HOST = aws_db_instance.mydb.address
       DB_USER = var.db_user
       DB_PASS = var.db_pass
@@ -45,6 +46,7 @@ resource "aws_lambda_function" "data_writer" {
 
   environment {
     variables = {
+      LAMBDA_ENDPOINT = aws_vpc_endpoint.lambda_interface.dns_entry[0].dns_name
       DB_HOST = aws_db_instance.mydb.address
       DB_USER = var.db_user
       DB_PASS = var.db_pass
@@ -64,4 +66,10 @@ resource "aws_lambda_function" "data_driver" {
 
   timeout          = var.timeout
   memory_size      = var.memory_size
+
+  environment {
+    variables = {
+      LAMBDA_ENDPOINT = aws_vpc_endpoint.lambda_interface.dns_entry[0].dns_name
+    }
+  }
 }
