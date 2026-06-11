@@ -6,6 +6,17 @@ variable "region" {
   type = string
 }
 
+#Databases
+variable "primary_db_name" {
+  type = string
+}
+variable "db_username" {
+  type = string
+}
+variable "db_password" {
+  type = string
+}
+
 #Serverless Functions
 variable "handler" {
   type = string
@@ -23,5 +34,10 @@ variable "memory_size" {
 #Output Variables
 #Network
 variable "private_subnet" {
+  type = string
+}
+
+#Database
+variable "aws_db_instance_primary" {
   type = string
 }
