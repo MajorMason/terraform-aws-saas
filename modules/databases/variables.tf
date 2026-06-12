@@ -43,8 +43,3 @@ variable "repository_db_name" {
 variable "repository_skip_final_snapshot" {
   type = bool
 }
-
-#Outputs
-output "aws_db_instance_primary" {
-  value = aws_db_instance.primary_db.address
-}

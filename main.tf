@@ -1,10 +1,42 @@
-#Network
-module "network" {
-  source        = "./modules/network"
-  environment   = var.environment
-  region        = var.region
-  cidr_block    = var.cidr_block
-  private_block = var.private_block
+#API Gateway
+module "api_gateway" {
+  source = "./modules/api_gateway"
+  #Common
+  environment = var.environment
+  region      = var.region
+  #API
+  protocol_type = var.protocol_type
+  #Stage
+  api_url_suffix = var.api_url_suffix
+  auto_deploy    = var.auto_deploy
+  #Route
+  reader_route_key = var.reader_route_key
+  writer_route_key = var.writer_route_key
+  driver_route_key = var.driver_route_key
+  #Integrations
+  #Common
+  integration_type       = var.integration_type
+  reader_function_invoke = var.reader_function_invoke
+  writer_function_invoke = var.writer_function_invoke
+  driver_function_invoke = var.driver_function_invoke
+  payload_format         = var.payload_format
+  #Permissions
+  reader_function_name = var.reader_function_name
+  writer_function_name = var.writer_function_name
+  driver_function_name = var.driver_function_name
+}
+
+#Frontend
+module "frontend" {
+  source = "./modules/frontend"
+  #Common
+  environment = var.environment
+  region      = var.region
+  #Amplify
+  repository               = var.repository
+  github_token             = var.github_token
+  enable_branch_auto_build = var.enable_branch_auto_build
+  branch_name              = var.branch_name
 }
 
 #Databases
@@ -28,6 +60,15 @@ module "databases" {
   repository_skip_final_snapshot = var.repository_skip_final_snapshot
 }
 
+#Network
+module "network" {
+  source        = "./modules/network"
+  environment   = var.environment
+  region        = var.region
+  cidr_block    = var.cidr_block
+  private_block = var.private_block
+}
+
 #Serverless Functions
 module "serverless_functions" {
   source      = "./modules/serverless_functions"
@@ -39,9 +80,11 @@ module "serverless_functions" {
   memory_size = var.memory_size
   #VPC Config
   private_subnet = var.private_subnet
+  lambda_sg      = var.lambda_sg
   #Environments
-  aws_db_instance_primary = var.aws_db_instance_primary
-  db_username             = var.db_username
-  db_password             = var.db_password
-  primary_db_name         = var.primary_db_name
+  lambda_interface_endpoint = var.lambda_interface_endpoint
+  aws_db_instance_primary   = var.aws_db_instance_primary
+  db_username               = var.db_username
+  db_password               = var.db_password
+  primary_db_name           = var.primary_db_name
 }

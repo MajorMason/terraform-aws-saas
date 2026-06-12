@@ -6,19 +6,19 @@ resource "aws_lambda_function" "data_reader" {
   role             = aws_iam_role.lambda_execution_role.arn
 
   filename         = "${path.module}/lambda/data-reader.zip"
-  source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
+  #source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
 
   timeout          = var.timeout
   memory_size      = var.memory_size
 
   vpc_config {
     subnet_ids         = [var.private_subnet]
-    security_group_ids = [aws_security_group.lambda_sg.id]
+    security_group_ids = [var.lambda_sg]
   }
 
   environment {
     variables = {
-      LAMBDA_ENDPOINT = aws_vpc_endpoint.lambda_interface_endpoint.dns_entry[0].dns_name
+      LAMBDA_ENDPOINT = var.lambda_interface_endpoint
       DB_HOST = var.aws_db_instance_primary
       DB_USER = var.db_username
       DB_PASS = var.db_password
@@ -34,19 +34,19 @@ resource "aws_lambda_function" "data_writer" {
   role             = aws_iam_role.lambda_execution_role.arn
 
   filename         = "${path.module}/lambda/data-writer.zip"
-  source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
+  #source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
 
   timeout          = var.timeout
   memory_size      = var.memory_size
 
   vpc_config {
     subnet_ids         = [var.private_subnet]
-    security_group_ids = [aws_security_group.lambda_sg.id]
+    security_group_ids = [var.lambda_sg]
   }
 
   environment {
     variables = {
-      LAMBDA_ENDPOINT = aws_vpc_endpoint.lambda_interface_endpoint.dns_entry[0].dns_name
+      LAMBDA_ENDPOINT = var.lambda_interface_endpoint
       DB_HOST = var.aws_db_instance_primary
       DB_USER = var.db_username
       DB_PASS = var.db_password
@@ -62,14 +62,14 @@ resource "aws_lambda_function" "data_driver" {
   role             = aws_iam_role.lambda_execution_role.arn
 
   filename         = "${path.module}/lambda/data-driver.zip"
-  source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
+  #source_code_hash = filebase64sha256("${path.module}/lambda/data-reader.zip")
 
   timeout          = var.timeout
   memory_size      = var.memory_size
 
   environment {
     variables = {
-      LAMBDA_ENDPOINT = aws_vpc_endpoint.lambda_interface_endpoint.dns_entry[0].dns_name
+      LAMBDA_ENDPOINT = var.lambda_interface_endpoint
     }
   }
 }

@@ -33,6 +33,12 @@ variable "memory_size" {
 
 #Output Variables
 #Network
+variable "lambda_interface_endpoint" {
+  type = string
+}
+variable "lambda_sg" {
+  type = string
+}
 variable "private_subnet" {
   type = string
 }

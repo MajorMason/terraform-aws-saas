@@ -7,17 +7,11 @@ variable "region" {
 }
 
 #Network
-#VPC
-variable "cidr_block" {
-  type = string
-}
 #Subnets
 variable "private_block" {
   type = string
 }
-
-#Outputs
-#Subnets
-output "private_subnet" {
-  value = aws_subnet.private_subnet.id
+#VPC
+variable "cidr_block" {
+  type = string
 }

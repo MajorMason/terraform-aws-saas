@@ -81,14 +81,20 @@ variable "repository" {
 variable "github_token" {
   type = string
 }
-
-#Network
-#VPC
-variable "cidr_block" {
+variable "enable_branch_auto_build" {
+  type = bool
+}
+variable "branch_name" {
   type = string
 }
+
+#Network
 #Subnets
 variable "private_block" {
+  type = string
+}
+#VPC
+variable "cidr_block" {
   type = string
 }
 
@@ -107,12 +113,40 @@ variable "memory_size" {
 }
 
 #Output Variables
+#Database
+variable "aws_db_instance_primary" {
+  type = string
+}
+
 #Network
+variable "lambda_interface_endpoint" {
+  type = string
+}
+variable "lambda_sg" {
+  type = string
+}
 variable "private_subnet" {
   type = string
 }
 
-#Database
-variable "aws_db_instance_primary" {
+#Serverless Functions
+#Lambda Function Invoke ARNs
+variable "reader_function_invoke" {
+  type = string
+}
+variable "writer_function_invoke" {
+  type = string
+}
+variable "driver_function_invoke" {
+  type = string
+}
+#Lambda Function Names
+variable "reader_function_name" {
+  type = string
+}
+variable "writer_function_name" {
+  type = string
+}
+variable "driver_function_name" {
   type = string
 }

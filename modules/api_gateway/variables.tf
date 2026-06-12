@@ -34,3 +34,25 @@ variable "writer_route_key" {
 variable "driver_route_key" {
   type = string
 }
+
+#Output Variables
+#Lambda Function Invoke ARNs
+variable "reader_function_invoke" {
+  type = string
+}
+variable "writer_function_invoke" {
+  type = string
+}
+variable "driver_function_invoke" {
+  type = string
+}
+#Lambda Function Names
+variable "reader_function_name" {
+  type = string
+}
+variable "writer_function_name" {
+  type = string
+}
+variable "driver_function_name" {
+  type = string
+}
