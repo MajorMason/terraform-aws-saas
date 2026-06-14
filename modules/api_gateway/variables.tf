@@ -11,6 +11,10 @@ variable "region" {
 variable "protocol_type" {
   type = string
 }
+variable "allow_origins" {
+  type = list(string)
+}
+#API_Stage
 variable "api_url_suffix" {
   type = string
 }

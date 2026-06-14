@@ -7,6 +7,10 @@ variable "region" {
 }
 
 #Network
+#Interface Endpoints
+variable "service_name" {
+  type = string
+}
 #Subnets
 variable "private_block" {
   type = string

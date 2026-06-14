@@ -1,11 +1,11 @@
 #API Gateway
 module "api_gateway" {
-  source = "./modules/api_gateway"
-  #Common
+  source      = "./modules/api_gateway"
   environment = var.environment
   region      = var.region
   #API
   protocol_type = var.protocol_type
+  allow_origins = var.allow_origins
   #Stage
   api_url_suffix = var.api_url_suffix
   auto_deploy    = var.auto_deploy
@@ -28,8 +28,7 @@ module "api_gateway" {
 
 #Frontend
 module "frontend" {
-  source = "./modules/frontend"
-  #Common
+  source      = "./modules/frontend"
   environment = var.environment
   region      = var.region
   #Amplify
@@ -42,7 +41,6 @@ module "frontend" {
 #Databases
 module "databases" {
   source = "./modules/databases"
-  #Common
   environment    = var.environment
   region         = var.region
   engine         = var.engine
@@ -65,6 +63,7 @@ module "network" {
   source        = "./modules/network"
   environment   = var.environment
   region        = var.region
+  service_name  = var.service_name
   cidr_block    = var.cidr_block
   private_block = var.private_block
 }
