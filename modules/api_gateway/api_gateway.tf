@@ -4,11 +4,11 @@ resource "aws_apigatewayv2_api" "api_gateway" {
   protocol_type = var.protocol_type
 
   cors_configuration {
-    allow_origins = ["*"]  # or your Amplify domain
+    allow_origins = var.allow_origins  # or your Amplify domain
     allow_methods = ["GET", "POST", "OPTIONS"]
     allow_headers = ["content-type", "authorization"]
     expose_headers = []
-    max_age = 0
+    max_age = var.max_age
   }
 }
 

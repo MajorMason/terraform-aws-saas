@@ -6,6 +6,7 @@ module "api_gateway" {
   #API
   protocol_type = var.protocol_type
   allow_origins = var.allow_origins
+  max_age       = var.max_age
   #Stage
   api_url_suffix = var.api_url_suffix
   auto_deploy    = var.auto_deploy
@@ -40,7 +41,7 @@ module "frontend" {
 
 #Databases
 module "databases" {
-  source = "./modules/databases"
+  source         = "./modules/databases"
   environment    = var.environment
   region         = var.region
   engine         = var.engine

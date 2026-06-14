@@ -15,6 +15,9 @@ variable "protocol_type" {
 variable "allow_origins" {
   type = list(string)
 }
+variable "max_age" {
+  type = number
+}
 #API_Stage
 variable "api_url_suffix" {
   type = string
