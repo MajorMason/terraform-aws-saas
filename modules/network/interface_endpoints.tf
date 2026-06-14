@@ -2,7 +2,7 @@
 #com.amazonaws.east-us-1.lambda
 resource "aws_vpc_endpoint" "lambda_interface_endpoint" {
   vpc_id       = aws_vpc.vpc.id
-  service_name = "com.amazonaws.east-us-1.lambda"
+  service_name = var.service_name
   vpc_endpoint_type = "Interface"
 
   subnet_ids = [aws_subnet.private_subnet.id]
