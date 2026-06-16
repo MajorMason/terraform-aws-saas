@@ -57,6 +57,8 @@ module "databases" {
   repository_allocated_storage   = var.repository_allocated_storage
   repository_db_name             = var.repository_db_name
   repository_skip_final_snapshot = var.repository_skip_final_snapshot
+  aws_db_subnet_group            = var.aws_db_subnet_group
+  rds_sg                         = var.rds_sg
 }
 
 #Network

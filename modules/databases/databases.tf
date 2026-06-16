@@ -1,4 +1,4 @@
-#AWS RDS instances are automatically kept private in your VPC including all its traffic.
+#AWS RDS instances need the db_subnet_group_name plus a security group for proper integration with the VPC
 #Over on our Lambda functions that communicate with our PostgreSQL DB instance, they just leverage
 #the DB_HOST, name, pass and user arguments to find the DB
 resource "aws_db_instance" "primary_db" {
@@ -11,6 +11,8 @@ resource "aws_db_instance" "primary_db" {
   username             = var.db_username
   password             = var.db_password
   skip_final_snapshot  = var.primary_skip_final_snapshot
+  db_subnet_group_name = var.aws_db_subnet_group
+  vpc_security_group_ids = [var.rds_sg]
 
   blue_green_update {
     enabled = true
@@ -27,6 +29,8 @@ resource "aws_db_instance" "repository_db" {
   username             = var.db_username
   password             = var.db_password
   skip_final_snapshot  = var.repository_skip_final_snapshot
+  db_subnet_group_name = var.aws_db_subnet_group
+  vpc_security_group_ids = [var.rds_sg]
 
   blue_green_update {
     enabled = true

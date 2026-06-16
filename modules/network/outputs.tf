@@ -7,7 +7,13 @@ output "lambda_interface_endpoint" {
 output "lambda_sg" {
   value = aws_security_group.lambda_sg.id
 }
+output "rds_sg" {
+  value = aws_security_group.rds_sg.id
+}
 #Subnets
+output "private_subnet_group" {
+  value = aws_db_subnet_group.db_subnet_group.name
+}
 output "private_subnet" {
   value = aws_subnet.private_subnet.id
 }

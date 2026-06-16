@@ -43,3 +43,13 @@ variable "repository_db_name" {
 variable "repository_skip_final_snapshot" {
   type = bool
 }
+
+#Output Variables
+#Security Groups
+variable "rds_sg" {
+  type = string
+}
+#Subnet Groups
+variable "aws_db_subnet_group" {
+  type = string
+}

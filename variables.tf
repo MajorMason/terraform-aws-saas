@@ -133,7 +133,13 @@ variable "aws_db_instance_primary" {
 variable "lambda_interface_endpoint" {
   type = string
 }
+variable "rds_sg" {
+  type = string
+}
 variable "lambda_sg" {
+  type = string
+}
+variable "aws_db_subnet_group" {
   type = string
 }
 variable "private_subnet" {
