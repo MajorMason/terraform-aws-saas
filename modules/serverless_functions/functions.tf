@@ -10,12 +10,12 @@ resource "aws_lambda_function" "data_reader" {
 
   timeout          = var.timeout
   memory_size      = var.memory_size
-
+#The subnet_ids argument list is what allows our data-reader and data-writer functions to talk securely to the RDS DB
   vpc_config {
     subnet_ids         = [var.private_subnet]
     security_group_ids = [var.lambda_sg]
   }
-
+#The LAMBDA_ENDPOINT is solely used to keep inter-Lambda function coms private between all three functions
   environment {
     variables = {
       LAMBDA_ENDPOINT = var.lambda_interface_endpoint
