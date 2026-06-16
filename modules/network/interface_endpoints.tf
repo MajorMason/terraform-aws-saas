@@ -1,5 +1,6 @@
 #We only need a single interface endpoint that points to:
 #com.amazonaws.east-us-1.lambda
+#This endpoint is solely required to allow the Lambda functions to call each other from within the VPC
 resource "aws_vpc_endpoint" "lambda_interface_endpoint" {
   vpc_id       = aws_vpc.vpc.id
   service_name = var.service_name
