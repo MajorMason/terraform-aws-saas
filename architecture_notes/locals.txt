@@ -30,7 +30,7 @@ Let's take a close look below at what's being outputted from our serverless_func
 #-You define local.functions
 #-Terraform reads local.functions to build local.function_routes
 #-Terraform reads local.function_routes to build local.function_routes_map
-#Nothing loops backward. Below is a snipped from our locals.tf file within the serverless_functions module:
+#Nothing loops backward. Below is a snippet from our locals.tf file within the serverless_functions module:
 locals {
   functions = {
     datareader = {
