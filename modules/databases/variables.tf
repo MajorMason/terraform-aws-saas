@@ -23,6 +23,24 @@ variable "db_username" {
 variable "db_password" {
   type = string
 }
+variable "backup_retention_period" {
+  type = string
+}
+variable "backup_window" {
+  type = string
+}
+variable "maintenance_window" {
+  type = string
+}
+variable "copy_tags_to_snapshot" {
+  type = bool
+}
+variable "final_snapshot_identifier" {
+  type = string
+}
+variable "deletion_protection" {
+  type = bool
+}
 #Primary DB
 variable "primary_allocated_storage" {
   type = number

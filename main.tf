@@ -41,14 +41,20 @@ module "frontend" {
 
 #Databases
 module "databases" {
-  source         = "./modules/databases"
-  environment    = var.environment
-  region         = var.region
-  engine         = var.engine
-  engine_version = var.engine_version
-  instance_class = var.instance_class
-  db_username    = var.db_username
-  db_password    = var.db_password
+  source                    = "./modules/databases"
+  environment               = var.environment
+  region                    = var.region
+  engine                    = var.engine
+  engine_version            = var.engine_version
+  instance_class            = var.instance_class
+  db_username               = var.db_username
+  db_password               = var.db_password
+  backup_retention_period   = var.backup_retention_period
+  backup_window             = var.backup_window
+  maintenance_window        = var.maintenance_window
+  copy_tags_to_snapshot     = var.copy_tags_to_snapshot
+  final_snapshot_identifier = var.final_snapshot_identifier
+  deletion_protection       = var.deletion_protection
   #Primary DB
   primary_allocated_storage   = var.primary_allocated_storage
   primary_db_name             = var.primary_db_name
