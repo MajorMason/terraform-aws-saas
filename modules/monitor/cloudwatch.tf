@@ -1,44 +1,20 @@
-#Data Reader Alarms
-#Error alarm
+#Data Reader
 resource "aws_cloudwatch_metric_alarm" "reader_lambda_errors" {
-  alarm_name          = "lambda-errors-${var.reader_function_name}"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = 2
-  metric_name         = "Errors"
-  namespace           = "AWS/Lambda"
-  period              = 300
-  statistic           = "Sum"
-  threshold           = 5
-  dimensions          = {FunctionName = var.reader_function_name}
-  alarm_actions       = [aws_sns_topic.alerts.arn]
-}
+  for_each = local.cloudwatch_alarms
 
-#Duration alarm (p95 approaching timeout)
-resource "aws_cloudwatch_metric_alarm" "reader_lambda_duration" {
-  alarm_name          = "lambda-duration-${var.reader_function_name}"
+  alarm_name          = each.value.alarm_name
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = 3
-  metric_name         = "Duration"
+  evaluation_periods  = each.value.evaluation_periods
+  metric_name         = each.value.metric_name
   namespace           = "AWS/Lambda"
   period              = 300
-  extended_statistic  = "p95"
-  threshold           = 1 * 0.8
-  dimensions          = {FunctionName = var.reader_function_name}
+  threshold           = each.value.threshold
+  dimensions          = each.value.dimensions
   alarm_actions       = [aws_sns_topic.alerts.arn]
-}
 
-#Throttle alarm is for when an invocation request was rejected before execution because the function hit its concurrency limit
-resource "aws_cloudwatch_metric_alarm" "reader_lambda_throttles" {
-  alarm_name          = "lambda-throttles-${var.reader_function_name}"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = 1
-  metric_name         = "Throttles"
-  namespace           = "AWS/Lambda"
-  period              = 300
-  statistic           = "Sum"
-  threshold           = 0
-  dimensions          = {FunctionName = var.reader_function_name}
-  alarm_actions       = [aws_sns_topic.alerts.arn]
+  # Safely handle mutually exclusive or optional statistic arguments
+  statistic          = try(each.value.statistic, null)
+  extended_statistic = try(each.value.extended_statistic, null)
 }
 
 #Data Writer Alarms
