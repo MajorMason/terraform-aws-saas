@@ -17,14 +17,14 @@ module "api_gateway" {
   #Integrations
   #Common
   integration_type       = var.integration_type
-  reader_function_invoke = var.reader_function_invoke
-  writer_function_invoke = var.writer_function_invoke
-  driver_function_invoke = var.driver_function_invoke
+  reader_function_invoke = module.serverless_functions.reader_function_invoke
+  writer_function_invoke = module.serverless_functions.writer_function_invoke
+  driver_function_invoke = module.serverless_functions.driver_function_invoke
   payload_format         = var.payload_format
   #Permissions
-  reader_function_name = var.reader_function_name
-  writer_function_name = var.writer_function_name
-  driver_function_name = var.driver_function_name
+  reader_function_name = module.serverless_functions.reader_function_name
+  writer_function_name = module.serverless_functions.writer_function_name
+  driver_function_name = module.serverless_functions.driver_function_name
 }
 
 #Frontend
@@ -63,8 +63,8 @@ module "databases" {
   repository_allocated_storage   = var.repository_allocated_storage
   repository_db_name             = var.repository_db_name
   repository_skip_final_snapshot = var.repository_skip_final_snapshot
-  aws_db_subnet_group            = var.aws_db_subnet_group
-  rds_sg                         = var.rds_sg
+  aws_db_subnet_group            = module.network.private_subnet_group
+  rds_sg                         = module.network.rds_sg
 }
 
 #Network
@@ -87,11 +87,11 @@ module "serverless_functions" {
   timeout     = var.timeout
   memory_size = var.memory_size
   #VPC Config
-  private_subnet = var.private_subnet
-  lambda_sg      = var.lambda_sg
+  private_subnet = module.network.private_subnet
+  lambda_sg      = module.network.lambda_sg
   #Environments
-  lambda_interface_endpoint = var.lambda_interface_endpoint
-  aws_db_instance_primary   = var.aws_db_instance_primary
+  lambda_interface_endpoint = module.network.lambda_interface_endpoint
+  aws_db_instance_primary   = module.databases.aws_db_instance_primary
   db_username               = var.db_username
   db_password               = var.db_password
   primary_db_name           = var.primary_db_name
